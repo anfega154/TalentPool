@@ -1,8 +1,9 @@
 server:
   port: 8080
+
 spring:
   application:
-    name: "NameProject"
+    name: "TalentPool"
   devtools:
     add-properties: false
   h2:
@@ -11,13 +12,22 @@ spring:
       path: "/h2"
   profiles:
     include: null
+
   datasource:
-    url: "jdbc:h2:mem:test"
-    username: "sa"
-    password: "pass"
-    driverClassName: "org.h2.Driver"
+    url: jdbc:postgresql://personas-db.c3a8sc0oeavk.us-east-2.rds.amazonaws.com:5432/personasdb
+    username: postgres
+    password: Aa5592770*
+    driver-class-name: org.postgresql.Driver
+
   jpa:
-    databasePlatform: "org.hibernate.dialect.H2Dialect"
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: public
+    show-sql: true
+
 management:
   endpoints:
     web:
@@ -27,5 +37,6 @@ management:
     health:
       probes:
         enabled: true
+
 cors:
   allowed-origins: "http://localhost:4200,http://localhost:8080"

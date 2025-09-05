@@ -1,30 +1,31 @@
 package com.anfega.api;
+
+import com.anfega.model.user.User;
+import com.anfega.model.user.gateways.UserInputPort;
+import com.anfega.api.dto.UserDTO;
+import com.anfega.api.dto.CreateUserDTO;
+import com.anfega.api.mapper.UserDTOMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-/**
- * API Rest controller.
- * 
- * Example of how to declare and use a use case:
- * <pre>
- * private final MyUseCase useCase;
- * 
- * public String commandName() {
- *     return useCase.execute();
- * }
- * </pre>
- */
 @RestController
-@RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "api/v1/user", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class ApiRest {
 
+    private final UserInputPort userInputPort;
+    private final UserDTOMapper userDTOMapper;
 
-    @GetMapping(path = "/usecase/path")
-    public String commandName() {
-        return "";
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<UserDTO> getUserById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(userDTOMapper.toResponse(userInputPort.getUserById(id)));
+    }
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDTO> saveUser(@RequestBody CreateUserDTO createUserDTO) {
+        User user = userDTOMapper.toModel(createUserDTO);
+        return ResponseEntity.ok(userDTOMapper.toResponse(userInputPort.saveUser(user)));
     }
 }
