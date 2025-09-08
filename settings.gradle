@@ -12,7 +12,7 @@ buildCache {
     }
 }
 
-rootProject.name = 'NameProject'
+rootProject.name = 'TalentPool'
 
 include ':app-service'
 include ':model'

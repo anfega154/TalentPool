@@ -4,19 +4,11 @@ server:
 spring:
   application:
     name: "TalentPool"
-  devtools:
-    add-properties: false
-  h2:
-    console:
-      enabled: true
-      path: "/h2"
-  profiles:
-    include: null
 
   datasource:
-    url: jdbc:postgresql://personas-db.c3a8sc0oeavk.us-east-2.rds.amazonaws.com:5432/personasdb
-    username: postgres
-    password: Aa5592770*
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
   jpa:
